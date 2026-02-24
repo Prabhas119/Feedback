@@ -4,7 +4,7 @@ const path = require("path");
 
 const app = express();
 app.use(express.json());
-app.use(express.static(__dirname));
+app.use(express.static("public"));
 
 // Create database file
 const db = new sqlite3.Database("./database.sqlite");
@@ -45,11 +45,12 @@ app.get("/feedbacks", (req, res) => {
     res.json(rows);
   });
 });
+app.get("/all", (req,res)=>{
+  db.all("SELECT * FROM feedback",(e,r)=>res.json(r));
+});
 
 const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
-
-
