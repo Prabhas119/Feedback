@@ -41,14 +41,14 @@ app.post("/submit", (req, res) => {
 });
 
 // GET route (moved outside)
-app.get("/feedbacks", (req, res) => {
+/*app.get("/feedbacks", (req, res) => {
   db.all("SELECT * FROM feedback", [], (err, rows) => {
     if (err) {
       return res.status(500).json({ error: err.message });
     }
     res.json(rows);
   });
-});
+});*/
 app.get("/all", (req,res)=>{
   db.all("SELECT * FROM feedback",(e,r)=>res.json(r));
 });
@@ -58,4 +58,5 @@ const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
 
