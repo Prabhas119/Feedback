@@ -20,16 +20,9 @@ db.serialize(() => {
   `);
 });
 
+// POST route
 app.post("/submit", (req, res) => {
   const { name, message } = req.body;
-  app.get("/feedbacks", (req, res) => {
-  db.all("SELECT * FROM feedback", [], (err, rows) => {
-    if (err) {
-      return res.status(500).json({ error: err.message });
-    }
-    res.json(rows);
-  });
-});
 
   db.run(
     "INSERT INTO feedback (name, message) VALUES (?, ?)",
@@ -43,6 +36,18 @@ app.post("/submit", (req, res) => {
   );
 });
 
-app.listen(5000, () => {
-  console.log("Server running on port 5000");
+// GET route (moved outside)
+app.get("/feedbacks", (req, res) => {
+  db.all("SELECT * FROM feedback", [], (err, rows) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+    res.json(rows);
+  });
+});
+
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
